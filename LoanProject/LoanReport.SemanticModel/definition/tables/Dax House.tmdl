@@ -1,0 +1,250 @@
+table 'Dax House'
+	lineageTag: 17656a3b-f28d-49a9-8736-675a6b4075c9
+
+	measure 'Total Loan Applications' = COUNTROWS(financial_loan)
+		formatString: #,0.0
+		lineageTag: a642a931-5b5e-49a2-9cf1-ef4738062437
+
+	measure 'Total Funded Amount' = SUM(financial_loan[loan_amount])
+		formatString: #,0.0
+		lineageTag: cb942232-d0b7-4b68-843a-2d89e741fe0e
+
+	measure 'Total Amount Recieved' = SUM(financial_loan[total_payment])
+		formatString: #,0.0
+		lineageTag: 6352ae78-1fdc-4373-82f5-bb5bfa69372e
+
+	measure 'Avg Intrest Rate' = AVERAGE(financial_loan[int_rate])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 0a81bb96-5d60-4c50-b751-5700f306425b
+
+	measure 'Avg DTI' = AVERAGE(financial_loan[dti])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: a129c75d-dce7-4cdc-9495-7411995542f0
+
+	measure MTD = CALCULATE([Total Loan Applications],DATESMTD('Date Table'[Date]))
+		formatString: 0.0
+		lineageTag: a13d88f9-b702-46df-afbe-81343ced7232
+
+	measure Pmtd = TOTALMTD([Total Loan Applications],DATESMTD(DATEADD('Date Table'[Date],-1,MONTH)))
+		formatString: 0
+		lineageTag: a1ac11fe-3dec-46f0-be01-a58af20d481f
+
+	measure MoM =
+			
+			DIVIDE(
+			    ([MTD]-[Pmtd]),
+			    [MTD]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: c0bc26d1-de83-49be-bdee-86b06888c0cc
+
+	measure 'MTD (Funded Amount)' =
+			
+			TOTALMTD(
+			    [Total Funded Amount],
+			    DATESMTD('Date Table'[Date])
+			)
+		formatString: \$#,0.0;(\$#,0.0);\$#,0.0
+		lineageTag: 06d518fb-2854-4a4e-8bc4-021e56516434
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'MoM (Funded Amount)' = ```
+			
+			VAR _mtd = [MTD (Funded Amount)]
+			VAR _pmtd = 
+			CALCULATE(
+			    [Total Funded Amount],
+			    DATESMTD(
+			        DATEADD('Date Table'[Date],-1,MONTH)
+			    )
+			)
+			RETURN
+			DIVIDE((_mtd-_pmtd),_pmtd)
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 7558114c-03f3-4f7d-8b71-46a6dd6b4254
+
+	measure 'MTD (Amount Recieved)' =
+			
+			TOTALMTD(
+			    [Total Amount Recieved],
+			    DATESMTD('Date Table'[Date])
+			)
+		formatString: #,0.0
+		lineageTag: 9a094709-ee8f-423c-ab95-362871b40ac5
+
+	measure 'MoM (Amount Recieved)' = ```
+			
+			VAR _mtd = [MTD (Amount Recieved)]
+			VAR _pmtd = 
+			CALCULATE(
+			    [Total Amount Recieved],
+			    DATESMTD(
+			        DATEADD(
+			            'Date Table'[Date],-1,MONTH
+			        )
+			    )
+			)
+			RETURN
+			DIVIDE(
+			    (_mtd-_pmtd),
+			    _pmtd
+			)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 9b5f2ad9-3df5-4186-9796-358cab63bbf7
+
+	measure 'MTD (Intrest)' =
+			
+			TOTALMTD(
+			    [Avg Intrest Rate],
+			    DATESMTD('Date Table'[Date])
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 6f393171-0264-4283-8c1c-fe7d3912159f
+
+	measure 'MoM (Intrest)' = ```
+			
+			VAR _mtd = 
+			[MTD (Intrest)]
+			VAR _pmtd = 
+			CALCULATE(
+			    [Avg Intrest Rate],
+			    DATESMTD(
+			        DATEADD('Date Table'[Date],-1,MONTH)
+			    )
+			)
+			RETURN
+			DIVIDE(
+			    (_mtd-_pmtd),
+			    _pmtd
+			)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 455d3771-b64d-4c68-8b20-59b9cc2eb33e
+
+	measure 'MTD (dti)' =
+			
+			TOTALMTD([Avg DTI],
+			DATESMTD('Date Table'[Date])
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: c62f64c1-33d0-4722-83cc-4a5b4fe48411
+
+	measure 'MoM (Dti)' = ```
+			
+			VAR _mtd = [MTD (dti)]
+			VAR _pmtd = 
+			CALCULATE(
+			    [Avg DTI],
+			    DATESMTD(
+			        DATEADD('Date Table'[Date],-1,MONTH)
+			    )
+			)
+			RETURN
+			DIVIDE(
+			    (_mtd-_pmtd),
+			    _pmtd
+			)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 844bdc2e-749c-45cf-9a4b-00a1cc7a4a64
+
+	measure 'Good Loan %' = ```
+			
+			VAR _GoodLoan = 
+			CALCULATE(
+			    [Total Loan Applications],
+			    financial_loan[good vs Bad] = "Good Loan"
+			)
+			RETURN
+			DIVIDE(
+			    _GoodLoan,[Total Loan Applications]
+			)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: b9d56c8f-5cbd-49ab-bcba-bee572492329
+
+	measure 'Good Loan Applications' =
+			
+			CALCULATE(
+			    [Total Loan Applications],
+			    financial_loan[good vs Bad]="Good Loan"
+			)
+		formatString: 0.0
+		lineageTag: 1bbb350c-452f-4422-a4c2-f89c0c3d0df5
+
+	measure 'Good Loan Funded Amount' =
+			
+			CALCULATE(
+			    [Total Funded Amount],
+			    financial_loan[good vs Bad] = "Good Loan"
+			)
+		formatString: 0.0
+		lineageTag: b52ef242-99c9-44ca-8aae-964f2cf549cb
+
+	measure 'Good Loan Total Recieved' =
+			
+			CALCULATE(
+			    [Total Amount Recieved],
+			    financial_loan[good vs Bad] = "Good Loan"
+			)
+		formatString: 0
+		lineageTag: 6ff22ed2-905b-4869-891c-9b9a5958bb6c
+
+	measure 'Bad Loan %' = ```
+			
+			VAR _badLoan = 
+			CALCULATE(
+			    [Total Loan Applications],
+			    financial_loan[good vs Bad] = "Bad Loan"
+			)
+			RETURN
+			DIVIDE(_badLoan,[Total Loan Applications])
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 721ff8a3-11e7-4cef-a268-7329f221651b
+
+	measure 'Bad Loan Applications' =
+			
+			CALCULATE(
+			    [Total Loan Applications],
+			    financial_loan[good vs Bad] = "Bad Loan"
+			)
+		formatString: 0.0
+		lineageTag: 6f2d5094-454f-4933-860a-fbcbbd7da14b
+
+	measure 'Bad Loan Funded Amount' =
+			
+			CALCULATE(
+			    [Total Funded Amount],
+			    financial_loan[good vs Bad] = "Bad Loan")
+		formatString: 0
+		lineageTag: 5d1ca41f-272a-4fc7-8586-36034eb7c198
+
+	measure 'Bad Loan Total Recieved' =
+			
+			CALCULATE(
+			    [Total Amount Recieved],
+			    financial_loan[good vs Bad] = "Bad Loan"
+			)
+		formatString: 0
+		lineageTag: e7f49b86-2e58-44cd-9289-9becdd72efae
+
+	column Value
+		formatString: 0
+		lineageTag: 5b58a2f2-6ba4-4677-801e-63dd3115eb5f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dax House' = calculated
+		mode: import
+		source = {1}
+
+	annotation PBI_Id = 66102dfeb0d74955a2f063753894b591
+

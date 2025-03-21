@@ -1,0 +1,29 @@
+model Model
+	culture: en-IN
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: en-IN
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["financial_loan"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.140.1577.0 (25.02)+00af0910c5ca19a229c472b0dfc17a2c488f6b0a
+
+annotation PBI_ProTooling = ["CalcGroup","DevMode"]
+
+ref table financial_loan
+ref table DateTableTemplate_8bd49e40-5881-4e88-ab28-de8e7fe29d3c
+ref table LocalDateTable_c4d7c802-89a3-4f62-b2ff-4f7217be0374
+ref table LocalDateTable_e449817a-ba1f-442e-a825-0118d72d0341
+ref table LocalDateTable_a58a5397-e7ec-4c11-b5af-8154a8e0278e
+ref table 'Date Table'
+ref table 'Dax House'
+ref table 'Calculation group'
+ref table Parameter
+
+ref cultureInfo en-IN
+

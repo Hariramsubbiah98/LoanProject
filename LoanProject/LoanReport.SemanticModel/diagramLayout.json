@@ -1,0 +1,86 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 156,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "financial_loan",
+          "nodeLineageTag": "05a2508f-a136-45fa-8c88-579e0f6e45a5",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 401,
+            "y": 40
+          },
+          "nodeIndex": "Date Table",
+          "nodeLineageTag": "6f7deede-323f-4751-8484-c7d5ab095b85",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 685,
+            "y": 50
+          },
+          "nodeIndex": "Dax House",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 969,
+            "y": 86
+          },
+          "nodeIndex": "Calculation group",
+          "nodeLineageTag": "b58fd511-69ab-499c-bcb7-13c830c02680",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1253,
+            "y": 74
+          },
+          "nodeIndex": "Parameter",
+          "nodeLineageTag": "8725a09d-1175-4731-b758-bae70cf2642c",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

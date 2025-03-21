@@ -1,0 +1,49 @@
+table Parameter
+	lineageTag: 8725a09d-1175-4731-b758-bae70cf2642c
+
+	column Parameter
+		lineageTag: c931d037-95f8-45b0-a08f-bf6803866da5
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Parameter Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Parameter Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Fields'
+		isHidden
+		lineageTag: 0cafde35-9cdf-4c2f-b0ed-304983848cae
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Parameter Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Order'
+		isHidden
+		formatString: 0
+		lineageTag: 7b2e4aac-0bbe-4ab9-8c33-334c092eccc4
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Parameter = calculated
+		mode: import
+		source =
+				{
+				    ("Total Loan Applications", NAMEOF('Dax House'[Total Loan Applications]), 0),
+				    ("Total Funded Amount", NAMEOF('Dax House'[Total Funded Amount]), 1),
+				    ("Total Amount Recieved", NAMEOF('Dax House'[Total Amount Recieved]), 2)
+				}
+
+	annotation PBI_Id = b669ba1de83d4e9ebc29eee75cc1766b
+

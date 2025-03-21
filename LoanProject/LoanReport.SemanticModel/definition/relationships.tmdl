@@ -1,0 +1,19 @@
+relationship 994ec197-b8a5-4de0-8676-ae3368fc1867
+	joinOnDateBehavior: datePartOnly
+	fromColumn: financial_loan.last_credit_pull_date
+	toColumn: LocalDateTable_c4d7c802-89a3-4f62-b2ff-4f7217be0374.Date
+
+relationship f6b345d2-d7be-4a2e-a942-3fad8cb36f4d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: financial_loan.last_payment_date
+	toColumn: LocalDateTable_e449817a-ba1f-442e-a825-0118d72d0341.Date
+
+relationship 09abcd92-b7af-4cbf-b724-debd7a499f1b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: financial_loan.next_payment_date
+	toColumn: LocalDateTable_a58a5397-e7ec-4c11-b5af-8154a8e0278e.Date
+
+relationship 002d7b72-7177-c801-b014-10e7de00f816
+	fromColumn: financial_loan.issue_date
+	toColumn: 'Date Table'.Date
+
